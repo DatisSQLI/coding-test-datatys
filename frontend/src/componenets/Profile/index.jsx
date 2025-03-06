@@ -14,6 +14,7 @@ function Profile({ user }) {
 }
 
 Profile.propTypes = {
+  // TODO : better typing
   user: PropTypes.objectOf(PropTypes.string),
 };
 Profile.defaultProps = {
