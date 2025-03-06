@@ -57,7 +57,31 @@ const getById = async (id) => {
   }
 }
 
+const update = async (id, {email, firstName, lastName, country, city, phoneNumber}) => {
+  try {
+    const queryText = {
+      text: `UPDATE users SET 
+              email = $2,
+              first_name = $3,
+              last_name = $4,
+              country = $5,
+              city = $6,
+              phone_number = $7
+            WHERE
+              id = $1`,
+      values: [id, email, firstName, lastName, country, city, phoneNumber],
+    };
+    
+    await db.query(queryText);
+
+    return 1;
+  } catch {
+    return 0;
+  }
+}
+
 module.exports = {
   authenticateUser,
-  getById
+  getById,
+  update
 };

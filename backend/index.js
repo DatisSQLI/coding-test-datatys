@@ -30,6 +30,14 @@ app.get('/user/:id', async (req, res) => {
   res.send(await user.getById(req.params.id));
 });
 
+app.put('/user/:id', async (req, res) => {
+    if (await user.update(req.params.id, req.body)) {
+      res.send({});
+    }
+
+    res.status(400);
+});
+
 const server = app.listen(port, () => {
   console.log(`Datatys App running on port ${port}.`);
 });

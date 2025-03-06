@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes, { string } from 'prop-types';
 import { useForm } from 'react-hook-form';
+import axios from '../../tools/api';
 
 function Profile({ user }) {
-  const { register } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: {
       firstName: user.firstname ?? '',
       lastName: user.lastname ?? '',
@@ -14,10 +15,14 @@ function Profile({ user }) {
     },
   });
 
+  const onSubmit = async (data) => {
+    await axios.put('/user/1', data);
+  };
+
   return (
     <div>
       <h1>My Profile</h1>
-      <form id="user-profile" onSubmit={(e) => e.preventDefault()}>
+      <form id="user-profile" onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="first-name">
           <span>First name</span>
           <input {...register('firstName')} id="first-name" />
