@@ -30,6 +30,27 @@ const authenticateUser = async (email, password) => {
   }
 };
 
+const getById = async (id) => {
+  const queryText = {
+    text: ` SELECT s.id, s.email, s.first_name as firstName, s.last_name as lastName
+              FROM users s
+              WHERE id = $1`,
+    values: [id],
+  };
+  try {
+    const { rows } = await db.query(queryText);
+    
+    if (rows[0]) {
+      const user = rows[0];
+      return user;
+    }
+    throw (new Error('User not found'));
+  } catch (error) {
+    throw (new Error('User not found'));
+  }
+}
+
 module.exports = {
   authenticateUser,
+  getById
 };

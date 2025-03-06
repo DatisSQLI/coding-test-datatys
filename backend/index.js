@@ -4,6 +4,8 @@ const path = require('path');
 const morganMiddleware = require('./middlewares/logger');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
+const user = require('./services/user')
+
 const port = 3002;
 
 const app = express();
@@ -23,6 +25,10 @@ app.use(
 );
 app.use(morganMiddleware);
 app.get('/health', (req, res) => res.send({ message: 'ok' }));
+
+app.get('/user/:id', async (req, res) => {
+  res.send(await user.getById(req.params.id));
+});
 
 const server = app.listen(port, () => {
   console.log(`Datatys App running on port ${port}.`);
