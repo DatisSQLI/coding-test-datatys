@@ -4,7 +4,7 @@ const path = require('path');
 const morganMiddleware = require('./middlewares/logger');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
-const user = require('./services/user')
+const userRoutes = require('./routes/user.route')
 
 const port = 3002;
 
@@ -26,25 +26,7 @@ app.use(
 app.use(morganMiddleware);
 app.get('/health', (req, res) => res.send({ message: 'ok' }));
 
-app.get('/user/:id', async (req, res) => {
-  res.send(await user.getById(req.params.id));
-});
-
-app.put('/user/:id', async (req, res) => {
-    if (await user.update(req.params.id, req.body)) {
-      res.send({});
-    }
-
-    // TODO : error handling
-});
-
-app.delete('/user/:id', async (req, res) => {
-  if (await user.deleteAccount(req.params.id)) {
-    res.send({});
-  }
-
-  // TODO : error handling
-});
+app.use(userRoutes);
 
 const server = app.listen(port, () => {
   console.log(`Datatys App running on port ${port}.`);
