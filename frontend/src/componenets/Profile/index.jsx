@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes, { string } from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { notification, Modal } from 'antd';
+import { isValidPhoneNumber } from 'libphonenumber-js';
 import axios from '../../tools/api';
 
 function Profile({ user }) {
@@ -86,8 +87,14 @@ function Profile({ user }) {
 
         <label htmlFor="phone-number">
           <span>Phone number</span>
-          <input {...register('phoneNumber')} id="phone-number" />
+          <input
+            id="phone-number"
+            {...register('phoneNumber', {
+              validate: (n) => isValidPhoneNumber(n) || 'Invalid phone number',
+            })}
+          />
         </label>
+        {errors.phoneNumber && <small className="form-error" role="alert">{errors.phoneNumber.message}</small>}
 
         <button type="submit">Save</button>
         <button type="button" onClick={deleteAccount}>Delete my account</button>
