@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes, { string } from 'prop-types';
 import { useForm } from 'react-hook-form';
-import { notification } from 'antd';
+import { notification, Modal } from 'antd';
 import axios from '../../tools/api';
 
 function Profile({ user }) {
@@ -34,7 +34,11 @@ function Profile({ user }) {
   };
 
   const deleteAccount = async () => {
-    await axios.delete('/user/1');
+    Modal.confirm({
+      title: 'Warning',
+      content: 'Are you sure you want to delete your account ?',
+      onOk: async () => { await axios.delete('/user/1'); },
+    });
   };
 
   return (
