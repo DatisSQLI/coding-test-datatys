@@ -39,7 +39,7 @@ const getById = async (id) => {
             s.last_name as lastName,
             country,
             city,
-            phone_number
+            phone_number as phoneNumber
           FROM users s
           WHERE id = $1`,
     values: [id],
