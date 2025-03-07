@@ -44,21 +44,18 @@ const getById = async (id) => {
           WHERE id = $1`,
     values: [id],
   };
-  try {
-    const { rows } = await db.query(queryText);
-    
-    if (rows[0]) {
-      const user = rows[0];
-      return user;
-    }
-    throw (new Error('User not found'));
-  } catch (error) {
-    throw (new Error('User not found'));
+
+  const { rows } = await db.query(queryText);
+  
+  if (rows[0]) {
+    const user = rows[0];
+    return user;
   }
+
+  throw new Error('User not found');
 }
 
-const update = async (id, {email, firstName, lastName, country, city, phoneNumber}) => {
-  try {
+const update = async (id, {email, firstName, lastName, country, city, phoneNumber}) => { 
     const queryText = {
       text: `UPDATE users SET 
               email = $2,
@@ -73,27 +70,16 @@ const update = async (id, {email, firstName, lastName, country, city, phoneNumbe
     };
     
     await db.query(queryText);
-
-    return 1;
-  } catch {
-    return 0;
-  }
 }
 
 // TODO : implement soft delete to prevent accidental deletion and allow recovery
 const deleteAccount = async (id) => {
-  try {
-    const queryText = {
-      text: `DELETE FROM users WHERE id = $1`,
-      values: [id],
-    };
-    
-    await db.query(queryText);
-
-    return 1;
-  } catch {
-    return 0;
-  }
+  const queryText = {
+    text: `DELETE FROM users WHERE id = $1`,
+    values: [id],
+  };
+  
+  await db.query(queryText);
 }
 
 module.exports = {
