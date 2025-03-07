@@ -1,5 +1,14 @@
 const userService = require('../services/user');
 
+exports.auth = async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
+        res.send(await userService.authenticateUser(email, password));
+    } catch (e) {
+        res.status(401).json({ message: 'Bad credentials' });
+    }
+};
+
 exports.getUser = async (req, res, next) => {
     try {
         res.send(await userService.getById(req.params.id));

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes, { string } from 'prop-types';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { notification, Modal } from 'antd';
 import { isValidPhoneNumber } from 'libphonenumber-js';
 import axios from '../../tools/api';
@@ -19,9 +20,11 @@ function Profile({ user }) {
 
   const [notify, contextHolder] = notification.useNotification();
 
+  const navigate = useNavigate();
+
   const onSubmit = async (data) => {
     try {
-      await axios.put('/user/1', data);
+      await axios.put(`/user/${user.id}`, data);
       notify.success({
         message: 'Updated',
         description: 'Your profile information has successfuly been updated.',
@@ -38,7 +41,10 @@ function Profile({ user }) {
     Modal.confirm({
       title: 'Warning',
       content: 'Are you sure you want to delete your account ?',
-      onOk: async () => { await axios.delete('/user/1'); },
+      onOk: async () => {
+        await axios.delete(`/user/${user.id}`);
+        navigate('/');
+      },
     });
   };
 
@@ -105,6 +111,7 @@ function Profile({ user }) {
 
 Profile.propTypes = {
   user: PropTypes.shape({
+    id: PropTypes.number,
     firstname: string,
     lastname: string,
     email: string,

@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+
+#auth-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: "Source Sans 3", sans-serif;
+}
+
+#auth-left-panel {
+    height: 50%;
+    background-color: #153376;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    width: 50%;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+#auth-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 24px;
+    height: 50%;
+    border: 2px solid;
+    box-sizing: border-box;
+    width: 40%;
+}
+
+#auth-form label > span {
+    display: block;
+}
+
+#auth-form > button[type=submit] {
+    background-color: #153376;
+    color: #fff;
+    cursor: pointer;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  }

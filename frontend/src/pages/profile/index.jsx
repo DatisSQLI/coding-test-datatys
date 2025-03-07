@@ -1,31 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import PropTypes, { string } from 'prop-types';
 import Profile from '../../componenets/Profile';
-import axios from '../../tools/api';
 
-function ProfilePage() {
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get('/user/1');
-        setUser(data);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (isLoading) return <p>Loading...</p>;
-
+function ProfilePage({ user }) {
   return (
     <div className="container">
       <Profile user={user} />
     </div>
   );
 }
+
+ProfilePage.propTypes = {
+  user: PropTypes.shape({
+    firstname: string,
+    lastname: string,
+    email: string,
+    phonenumber: string,
+    city: string,
+    country: string,
+  }).isRequired,
+};
 
 export default ProfilePage;

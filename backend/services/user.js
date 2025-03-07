@@ -13,7 +13,13 @@ const hashPassword = (email, password) => shajs('sha256').update(`${email}${pass
 const authenticateUser = async (email, password) => {
   const hash = hashPassword(email, password);
   const queryText = {
-    text: ` SELECT s.id, s.email, s.first_name as firstName, s.last_name as lastName
+    text: ` SELECT s.id,
+            s.email,
+            s.first_name as firstName,
+            s.last_name as lastName,
+            country,
+            city,
+            phone_number as phoneNumber
               FROM users s
               WHERE email = $1 AND password = $2`,
     values: [email, hash],
