@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Profile from '../../componenets/Profile';
+import axios from '../../tools/api';
 
 function ProfilePage() {
   const [user, setUser] = useState(null);
@@ -8,11 +9,7 @@ function ProfilePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3002/user/1');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
+        const { data } = await axios.get('/user/1');
         setUser(data);
       } finally {
         setIsLoading(false);
