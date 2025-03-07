@@ -71,6 +71,10 @@ function Profile({ user }) {
           <input
             id="email"
             {...register('email', {
+              required: {
+                value: true,
+                message: 'email is mandatory',
+              },
               pattern: {
                 value: /^[a-zA-Z0-9_+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/,
                 message: 'Email format is invalid',
