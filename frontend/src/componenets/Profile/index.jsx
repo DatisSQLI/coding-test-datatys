@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import axios from '../../tools/api';
 
 function Profile({ user }) {
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       firstName: user.firstname ?? '',
       lastName: user.lastname ?? '',
@@ -45,8 +45,17 @@ function Profile({ user }) {
 
         <label htmlFor="email">
           <span>Email</span>
-          <input {...register('email')} id="email" />
+          <input
+            id="email"
+            {...register('email', {
+              pattern: {
+                value: /^[a-zA-Z0-9_+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/,
+                message: 'Email format is invalid',
+              },
+            })}
+          />
         </label>
+        {errors.email && <small className="form-error" role="alert">{errors.email.message}</small>}
 
         <label htmlFor="phone-number">
           <span>Phone number</span>

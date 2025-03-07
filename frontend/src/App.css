@@ -20,3 +20,8 @@ form#user-profile > label > span {
 form#user-profile > label > input {
   margin-left: auto;
 }
+
+.form-error {
+  color: red;
+  margin: 0 0 0 auto;
+}
