@@ -80,8 +80,25 @@ const update = async (id, {email, firstName, lastName, country, city, phoneNumbe
   }
 }
 
+// TODO : implement soft delete to prevent accidental deletion and allow recovery
+const deleteAccount = async (id) => {
+  try {
+    const queryText = {
+      text: `DELETE FROM users WHERE id = $1`,
+      values: [id],
+    };
+    
+    await db.query(queryText);
+
+    return 1;
+  } catch {
+    return 0;
+  }
+}
+
 module.exports = {
   authenticateUser,
   getById,
-  update
+  update,
+  deleteAccount
 };

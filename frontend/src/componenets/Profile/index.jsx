@@ -19,6 +19,10 @@ function Profile({ user }) {
     await axios.put('/user/1', data);
   };
 
+  const deleteAccount = async () => {
+    await axios.delete('/user/1');
+  };
+
   return (
     <div>
       <h1>My Profile</h1>
@@ -63,6 +67,7 @@ function Profile({ user }) {
         </label>
 
         <button type="submit">Save</button>
+        <button type="button" onClick={deleteAccount}>Delete my account</button>
       </form>
     </div>
   );

@@ -35,7 +35,15 @@ app.put('/user/:id', async (req, res) => {
       res.send({});
     }
 
-    res.status(400);
+    // TODO : error handling
+});
+
+app.delete('/user/:id', async (req, res) => {
+  if (await user.deleteAccount(req.params.id)) {
+    res.send({});
+  }
+
+  // TODO : error handling
 });
 
 const server = app.listen(port, () => {
