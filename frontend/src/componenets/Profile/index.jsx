@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes, { string } from 'prop-types';
 import { useForm } from 'react-hook-form';
+import { notification } from 'antd';
 import axios from '../../tools/api';
 
 function Profile({ user }) {
@@ -15,8 +16,21 @@ function Profile({ user }) {
     },
   });
 
+  const [notify, contextHolder] = notification.useNotification();
+
   const onSubmit = async (data) => {
-    await axios.put('/user/1', data);
+    try {
+      await axios.put('/user/1', data);
+      notify.success({
+        message: 'Updated',
+        description: 'Your profile information has successfuly been updated.',
+      });
+    } catch (e) {
+      notify.error({
+        message: 'Update failed',
+        description: 'An error occured while updating your profile.',
+      });
+    }
   };
 
   const deleteAccount = async () => {
@@ -25,6 +39,7 @@ function Profile({ user }) {
 
   return (
     <div>
+      {contextHolder}
       <h1>My Profile</h1>
       <form id="user-profile" onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="first-name">
